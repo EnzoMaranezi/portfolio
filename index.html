@@ -309,53 +309,61 @@ Atualmente aprofundando conhecimentos em FastAPI, APIs REST, autenticação, seg
       </section>
 
       <section class="section section--contact" id="contact">
-        <div class="section__heading reveal">
-          <p class="eyebrow">Contato</p>
-          <h2>Disponível para ideias com identidade forte e execução precisa.</h2>
+      <div class="section__heading reveal">
+        <p class="eyebrow">Contato</p>
+        <h2>Disponível para ideias com identidade forte e execução precisa.</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card reveal">
+          <a href="https://github.com/" target="_blank" rel="noreferrer">
+            <span>GitHub</span>
+            <strong>github.com/enzo-maranezi</strong>
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+            <span>LinkedIn</span>
+            <strong>linkedin.com/in/enzo-maranezi</strong>
+          </a>
+          <a href="mailto:enzo@maranezi.dev">
+            <span>Email</span>
+            <strong>enzomaranezi3@outlook.com</strong>
+          </a>
         </div>
 
-        <div class="contact-grid">
-          <div class="contact-card reveal">
-            <a href="https://github.com/" target="_blank" rel="noreferrer">
-              <span>GitHub</span>
-              <strong>github.com/enzo-maranezi</strong>
-            </a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-              <span>LinkedIn</span>
-              <strong>linkedin.com/in/enzo-maranezi</strong>
-            </a>
-            <a href="mailto:enzo@maranezi.dev">
-              <span>Email</span>
-              <strong>enzo.maranezi@sou.unifal-mg.edu.br</strong>
-            </a>
+        <!-- FORMULÁRIO CORRIGIDO -->
+        <form class="contact-form reveal" id="contactForm">
+          <div class="form-row">
+            <label>
+              Nome
+              <input type="text" name="from_name" placeholder="Seu nome" required />
+            </label>
+
+            <label>
+              Email
+              <input type="email" name="reply_to" placeholder="seu@email.com" required />
+            </label>
           </div>
 
-          <form class="contact-form reveal" id="contactForm">
-            <div class="form-row">
-              <label>
-                Nome
-                <input type="text" name="name" placeholder="Seu nome" required />
-              </label>
-              <label>
-                Email
-                <input type="email" name="email" placeholder="seu@email.com" required />
-              </label>
-            </div>
-            <label>
-              Mensagem
-              <textarea name="message" rows="5" placeholder="Conte sobre o seu projeto..." required></textarea>
-            </label>
-            <button class="button button--primary" type="submit">Enviar mensagem</button>
-            <p class="form-note">Resposta rápida para projetos, oportunidades e colaborações.</p>
-          </form>
-        </div>
-      </section>
-    </main>
+          <label>
+            Mensagem
+            <textarea name="message" rows="5" placeholder="Conte sobre o seu projeto..." required></textarea>
+          </label>
 
-    <footer class="footer">
-      <p>© 2026 Enzo Maranezi. Portfólio com dark UI, motion e identidade própria.</p>
-    </footer>
+          <button class="button button--primary" type="submit">
+            Enviar mensagem
+          </button>
 
+          <p class="form-note">
+            Resposta rápida para projetos, oportunidades e colaborações.
+          </p>
+        </form>
+      </div>
+    </section>
+
+       <!-- EmailJS SDK (OBRIGATÓRIO vir antes do script.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Seu script principal -->
     <script src="./script.js"></script>
   </body>
 </html>

@@ -360,44 +360,39 @@ function setupLoading() {
 /* ───────────────────────────────────────────── */
 
 function setupContactForm() {
-if (!contactForm) return;
+  if (!contactForm) return;
 
-contactForm.addEventListener("submit", async (event) => {
-event.preventDefault();
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-const button = contactForm.querySelector("button[type='submit']");
-if (!(button instanceof HTMLButtonElement)) return;
+    const button = contactForm.querySelector("button[type='submit']");
+    if (!(button instanceof HTMLButtonElement)) return;
 
-const originalText = button.textContent;
+    const originalText = button.textContent;
 
-button.disabled = true;
-button.textContent = "Enviando...";
+    button.disabled = true;
+    button.textContent = "Enviando...";
 
-try {
-  const response = await fetch(contactForm.action, {
-    method: "POST",
-    body: new FormData(contactForm),
-    headers: {
-      Accept: "application/json"
+    try {
+      await emailjs.sendForm(
+        "service_14gpi7s",
+        "template_0zomefp",
+        contactForm
+      );
+
+      button.textContent = "Mensagem enviada!";
+      contactForm.reset();
+
+    } catch (error) {
+      console.error(error);
+      button.textContent = "Erro ao enviar";
     }
+
+    setTimeout(() => {
+      button.disabled = false;
+      button.textContent = originalText ?? "Enviar mensagem";
+    }, 2500);
   });
-
-  if (response.ok) {
-    button.textContent = "Mensagem enviada!";
-    contactForm.reset();
-  } else {
-    button.textContent = "Erro ao enviar";
-  }
-} catch (error) {
-  button.textContent = "Erro ao enviar";
-}
-
-setTimeout(() => {
-  button.disabled = false;
-  button.textContent = originalText ?? "Enviar mensagem";
-}, 2500);
-
-});
 }
 
 
@@ -417,6 +412,8 @@ function setupWindowResize() {
 /* ───────────────────────────────────────────── */
 
 function init() {
+  emailjs.init("sWKsMdkQjzuIMABub");
+
   setupLoading();
 
   setupNavbar();
