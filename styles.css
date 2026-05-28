@@ -38,7 +38,7 @@ body {
   color: var(--text);
   overflow-x: hidden;
   min-height: 100vh;
-  cursor: none;
+  cursor: none; 
 }
 
 a,
@@ -106,61 +106,67 @@ button {
   animation: drift 14s ease-in-out infinite reverse;
 }
 
-.cursor,
-.cursor--dot {
+#cursor {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2147483647;
   pointer-events: none;
-  will-change: translate;
-  translate: var(--cursor-x, -200px) var(--cursor-y, -200px);
+  z-index: 999999;
+
   transform: translate(-50%, -50%);
+  
+  background: rgba(255, 255, 255, 0.05);
+
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+
   opacity: 1;
 }
 
-.cursor {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid rgba(140, 255, 193, 0.46);
-  background: rgba(140, 255, 193, 0.07);
-  box-shadow: 0 0 26px rgba(140, 255, 193, 0.18);
-  /* REMOVIDO: backdrop-filter — ele criava stacking context e engolia o cursor */
-  transition:
-    opacity 0.18s ease,
-    width 0.22s ease,
-    height 0.22s ease,
-    border-color 0.22s ease,
-    background 0.22s ease,
-    box-shadow 0.22s ease,
-    scale 0.22s ease;
-  scale: var(--cursor-scale, 1);
-}
-
-.cursor--dot {
+#cursorDot {
   width: 8px;
   height: 8px;
+  background: #ffffff;
   border-radius: 50%;
-  background: var(--mint);
-  box-shadow: 0 0 14px rgba(140, 255, 193, 0.54);
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000000;
+
+  transform: translate(-50%, -50%);
+
   transition:
-    opacity 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease;
+    transform 0.1s ease,
+    opacity 0.2s ease;
+
+  opacity: 1;
 }
 
-.cursor.is-hovering {
-  width: 56px;
-  height: 56px;
-  border-color: rgba(255, 94, 168, 0.56);
-  background: rgba(255, 94, 168, 0.08);
-  box-shadow: 0 0 32px rgba(255, 94, 168, 0.2);
+/* Hover em elementos clicáveis */
+
+.cursor-hover {
+  width: 70px !important;
+  height: 70px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: #ffffff !important;
 }
 
-.cursor--dot.is-hovering {
-  background: var(--rose);
-  box-shadow: 0 0 16px rgba(255, 94, 168, 0.68);
+/* Mobile / touch */
+
+@media (pointer: coarse) {
+  #cursor,
+  #cursorDot {
+    display: none;
+  }
 }
 
 /* ─── LOADING ─────────────────────────────────────────────── */
@@ -314,13 +320,12 @@ main {
 
 /* ─── HERO ────────────────────────────────────────────────── */
 .hero {
-  min-height: 100vh;
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
-  gap: 40px;
+  grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
-  padding-top: 128px;
-  overflow: hidden;
+  gap: 64px;
+  overflow: visible;
 }
 
 .hero::before {
@@ -543,13 +548,18 @@ p {
 /* ─── HERO VISUAL ─────────────────────────────────────────── */
 .hero__visual {
   position: relative;
+  width: 100%;
+  max-width: 540px;
   min-height: 620px;
+  margin-inline: auto;
+  overflow: visible;
   animation: fadeUp 1.05s ease both;
 }
 
 .hero-card {
   position: relative;
-  height: 100%;
+  width: 100%;
+  min-height: 620px;
   padding: 24px;
   border-radius: var(--radius-xl);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
@@ -589,20 +599,12 @@ p {
   animation: pulseGlow 4.8s ease-in-out infinite;
 }
 
-.status-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--mint);
-  box-shadow: 0 0 0 8px rgba(140, 255, 193, 0.08);
-  animation: pulseDot 2.2s ease-in-out infinite;
-}
-
 .hero-card__core {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
+  z-index: 1;
 }
 
 .core-node {
@@ -648,6 +650,7 @@ p {
   bottom: 24px;
   display: grid;
   gap: 14px;
+  z-index: 3;
 }
 
 .hero-card__meta > div,
@@ -1266,10 +1269,6 @@ textarea {
     display: none;
   }
 
-  body {
-    cursor: auto;
-  }
-
   button {
     cursor: pointer;
   }
@@ -1301,10 +1300,33 @@ textarea {
     opacity: 1;
     transform: none;
   }
+}
 
-  .cursor,
-  .cursor--dot,
-  .loading-screen {
-    display: none !important;
+/* ─── AJUSTE HERO RESPONSIVO ─────────────────────────────── */
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero__visual {
+    max-width: 540px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 540px;
+  }
+
+  .hero-card {
+    width: 100%;
+  }
+
+  .floating-stat--one {
+    left: 0;
+  }
+
+  .floating-stat--two {
+    right: 0;
   }
 }
+
+
